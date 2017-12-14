@@ -1,12 +1,10 @@
 package com.reactive.programming.web.transformer;
 
-import com.reactive.programming.web.controller.ReactiveDemoController;
 import com.reactive.programming.web.domain.ExternalRequest;
 import com.reactive.programming.web.util.DelayService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
 
 @Service

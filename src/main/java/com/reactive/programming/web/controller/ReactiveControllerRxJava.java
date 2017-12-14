@@ -2,17 +2,11 @@ package com.reactive.programming.web.controller;
 
 import com.reactive.programming.web.domain.InternalRequest;
 import com.reactive.programming.web.domain.InternalResponse;
-import com.reactive.programming.web.service.ExternalService;
-import com.reactive.programming.web.transformer.RequestEnhancer;
-import com.reactive.programming.web.transformer.RequestTransformer;
-import com.reactive.programming.web.transformer.ResponseEnhancer;
-import com.reactive.programming.web.transformer.ResponseTransformer;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,25 +23,10 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping(value = "/", produces = "application/json")
-public class ReactiveDemoController {
+@RequestMapping(value = "/rxjava", produces = "application/json")
+public class ReactiveControllerRxJava extends ReactiveControllerBase {
 
-    private static final Logger logger = LoggerFactory.getLogger(ReactiveDemoController.class);
-
-    @Autowired
-    private RequestTransformer requestTransformer;
-
-    @Autowired
-    private RequestEnhancer requestEnhancer;
-
-    @Autowired
-    private ExternalService externalService;
-
-    @Autowired
-    private ResponseTransformer responseTransformer;
-
-    @Autowired
-    private ResponseEnhancer responseEnhancer;
+    private static final Logger logger = LoggerFactory.getLogger(ReactiveControllerRxJava.class);
 
     @RequestMapping(value = "/sync", method = RequestMethod.GET)
     @ResponseBody
@@ -142,11 +121,10 @@ public class ReactiveDemoController {
     }
 
     private Observable<InternalRequest> createRequestObservable() {
-        return Observable.just(
-                new InternalRequest() {{
-                    setInternalRequestBody("body-" + randomAlphabetic(10));
-                    setInternalRequestCookie("cookie-" + randomAlphabetic(10));
-                    setInternalRequestHeader("header-" + randomAlphabetic(10));
-                }});
+        return Observable.create(e -> e.onNext(new InternalRequest() {{
+            setInternalRequestBody("body-" + randomAlphabetic(10));
+            setInternalRequestCookie("cookie-" + randomAlphabetic(10));
+            setInternalRequestHeader("header-" + randomAlphabetic(10));
+        }}));
     }
 }

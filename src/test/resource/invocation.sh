@@ -1,18 +1,29 @@
 #!/usr/bin/env bash
 
-alias callReactiveEndpoints=functionCallReactiveEndpoints
-functionCallReactiveEndpoints() {
-  functionCallReactiveEndpoint "sync"
-  functionCallReactiveEndpoint "reactive-sync"
-  functionCallReactiveEndpoint "reactive-async-with-subscribeOn-rxIoThreadPool"
-  functionCallReactiveEndpoint "reactive-async-with-subscribeOn-customThreadPool"
+functionCallReactiveEndpointWithPrefix() {
+  local PREFIX=$1
+  local ENDPOINT=$2
+  printf "GET http://localhost:58880/$PREFIX/$ENDPOINT\n"
+  curl -sk "http://localhost:58880/$PREFIX/$ENDPOINT" -H 'Content-Type: application/json'  | python -m json.tool; curl -s  -o null "http://localhost:58880/$PREFIX/$ENDPOINT" -H 'Content-Type: application/json' -w %{time_total}\\n
+  printf "\n"
 }
 
-functionCallReactiveEndpoint() {
-  local endpoint=$1
-  printf "==Calling $endpoint endpoint at http://localhost:58880/$endpoint==\n"
-  curl -sk  http://localhost:58880/$endpoint -H 'Content-Type: application/json'  | python -m json.tool; curl -s  -o null http://localhost:58880/$endpoint -H 'Content-Type: application/json' -w %{time_total}\\n
-  printf "\n\n"
+function callReactiveEndpointsOnRxJava() {
+    local PREFIX="rxjava"
+    functionCallReactiveEndpointWithPrefix "$PREFIX" "sync"
+    functionCallReactiveEndpointWithPrefix "$PREFIX" "reactive-sync"
+    functionCallReactiveEndpointWithPrefix "$PREFIX" "reactive-async-with-subscribeOn-rxIoThreadPool"
+    functionCallReactiveEndpointWithPrefix "$PREFIX" "reactive-async-with-subscribeOn-customThreadPool"
 }
 
-callReactiveEndpoints
+function callReactiveEndpointsOnJava9() {
+    local PREFIX="java9"
+    functionCallReactiveEndpointWithPrefix "$PREFIX" "sync"
+    functionCallReactiveEndpointWithPrefix "$PREFIX" "reactive-sync"
+    functionCallReactiveEndpointWithPrefix "$PREFIX" "reactive-async-with-subscribeOn-rxIoThreadPool"
+    functionCallReactiveEndpointWithPrefix "$PREFIX" "reactive-async-with-subscribeOn-customThreadPool"
+}
+
+callReactiveEndpointsOnRxJava
+printf "=======\n\n "
+callReactiveEndpointsOnJava9
