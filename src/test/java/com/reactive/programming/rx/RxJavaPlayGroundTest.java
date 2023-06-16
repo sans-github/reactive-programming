@@ -2,12 +2,12 @@ package com.reactive.programming.rx;
 
 import com.reactive.programming.web.util.DelayService;
 import com.reactive.programming.web.util.DelayServiceImpl;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import org.apache.commons.lang.RandomStringUtils;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,7 +51,7 @@ public class RxJavaPlayGroundTest {
 
     @Test
     public void testSyncEmissionAndSyncProcessing() {
-        //notice emission and subscription-processing happens on the main thread
+        // notice emission and subscription-processing happens on the main thread
         final Observable<String> observable = getSingleStringObservable();
         final Observer<String> observer = getStringObserver();
 
@@ -69,7 +69,8 @@ public class RxJavaPlayGroundTest {
 
     @Test
     public void testSyncEmissionAndASyncProcessing() {
-        //notice emission happens on main thread, and subscription-processing happens on computation thread
+        // notice emission happens on main thread, and subscription-processing happens
+        // on computation thread
         final Observable<String> observable = getSingleStringObservable();
         final Observer<String> observer = getStringObserver();
 
@@ -85,13 +86,13 @@ public class RxJavaPlayGroundTest {
                 .observeOn(Schedulers.computation())
                 .subscribe(observer);
 
-        delayService.delay(200); //hold program termination to let all log statements complete
+        delayService.delay(200); // hold program termination to let all log statements complete
     }
 
     @Test
     public void testASyncEmissionAndSyncSubscription() {
 
-        //notice emission and subscription-processing happens on the non-main thread
+        // notice emission and subscription-processing happens on the non-main thread
         final Observable<String> observable = getSingleStringObservable();
         final Observer<String> observer = getStringObserver();
 
@@ -107,13 +108,13 @@ public class RxJavaPlayGroundTest {
                 })
                 .subscribe(observer);
 
-        delayService.delay(200); //hold program termination to let all log statements complete
+        delayService.delay(200); // hold program termination to let all log statements complete
     }
 
     @Test
     public void testASyncEmissionAndASyncSubscription() {
 
-        //notice emission and processing happens on the non-main thread
+        // notice emission and processing happens on the non-main thread
         final Observable<String> observable = getSingleStringObservable();
         final Observer<String> observer = getStringObserver();
 
@@ -129,10 +130,11 @@ public class RxJavaPlayGroundTest {
                 }).observeOn(Schedulers.computation())
                 .subscribe(observer);
 
-        delayService.delay(200); //hold program termination to let all log statements complete
+        delayService.delay(200); // hold program termination to let all log statements complete
     }
 
-    //Observable Contract:  onNext() must be called sequentially and never concurrently by more than one thread at a time
+    // Observable Contract: onNext() must be called sequentially and never
+    // concurrently by more than one thread at a time
     @Test
     public void testObservableWithSerialEmission() {
         Observable.range(1, 10).subscribeOn(Schedulers.io()).map(integer -> {
@@ -190,20 +192,22 @@ public class RxJavaPlayGroundTest {
 
             @Override
             public void onNext(@NonNull final String s) {
-                //conveys an item that is emitted by the Observable to the observer
+                // conveys an item that is emitted by the Observable to the observer
                 logger.info("Observer processing the string [{}] with no-op", s);
             }
 
             @Override
             public void onError(@NonNull final Throwable e) {
-                //indicates that the Observable has terminated with a specified error condition and that it will be emitting no further items
+                // indicates that the Observable has terminated with a specified error condition
+                // and that it will be emitting no further items
                 logger.info("Observer.onError ", e);
                 throw new RuntimeException(e);
             }
 
             @Override
             public void onComplete() {
-                //indicates that the Observable has completed successfully and that it will be emitting no further items
+                // indicates that the Observable has completed successfully and that it will be
+                // emitting no further items
                 logger.info("Observer.onCompleted");
             }
         };

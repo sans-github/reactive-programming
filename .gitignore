@@ -17,6 +17,7 @@
 
 # Build
 target/
+.vscode/
 
 **/.DS_store
 # git properties file
