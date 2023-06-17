@@ -3,20 +3,20 @@ Experiment with reactive programming
 
 ## Endpoints for ReactiveDemoController
 ### /sync
-    curl -sk  http://localhost:58880/rxjava/sync -H 'Content-Type: application/json'  | python -m json.tool
-    curl -sk  http://localhost:58880/java9/sync -H 'Content-Type: application/json'  | python -m json.tool
+    curl -sk  http://localhost:58880/rxjava/sync -H 'Content-Type: application/json'  | python3 -m json.tool
+    curl -sk  http://localhost:58880/java9/sync -H 'Content-Type: application/json'  | python3 -m json.tool
 
 ### /reactive-sync
-    curl -sk  http://localhost:58880/rxjava/reactive-sync -H 'Content-Type: application/json'  | python -m json.tool
-    curl -sk  http://localhost:58880/java9/reactive-sync -H 'Content-Type: application/json'  | python -m json.tool
+    curl -sk  http://localhost:58880/rxjava/reactive-sync -H 'Content-Type: application/json'  | python3 -m json.tool
+    curl -sk  http://localhost:58880/java9/reactive-sync -H 'Content-Type: application/json'  | python3 -m json.tool
 
 ### /reactive-async-with-subscribeOn-rxIoThreadPool
-    curl -sk  http://localhost:58880/rxjava/reactive-async-with-subscribeOn-rxIoThreadPool -H 'Content-Type: application/json'  | python -m json.tool
-    curl -sk  http://localhost:58880/java9/reactive-async-with-subscribeOn-rxIoThreadPool -H 'Content-Type: application/json'  | python -m json.tool
+    curl -sk  http://localhost:58880/rxjava/reactive-async-with-subscribeOn-rxIoThreadPool -H 'Content-Type: application/json'  | python3 -m json.tool
+    curl -sk  http://localhost:58880/java9/reactive-async-with-subscribeOn-rxIoThreadPool -H 'Content-Type: application/json'  | python3 -m json.tool
 
 ### /reactive-async-with-subscribeOn-customThreadPool
-    curl -sk  http://localhost:58880/rxjava/reactive-async-with-subscribeOn-customThreadPool -H 'Content-Type: application/json'  | python -m json.tool
-    curl -sk  http://localhost:58880/java9/reactive-async-with-subscribeOn-customThreadPool -H 'Content-Type: application/json'  | python -m json.tool
+    curl -sk  http://localhost:58880/rxjava/reactive-async-with-subscribeOn-customThreadPool -H 'Content-Type: application/json'  | python3 -m json.tool
+    curl -sk  http://localhost:58880/java9/reactive-async-with-subscribeOn-customThreadPool -H 'Content-Type: application/json'  | python3 -m json.tool
 
 
 ## Endpoints for MultiThreadController

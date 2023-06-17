@@ -22,7 +22,7 @@ public class ExternalService {
     }
 
     public ExternalResponse execute(final ExternalRequest externalRequest) {
-        delayService.delay(100);
+        delayService.delay(1000);
         final ExternalResponse externalResponse = new ExternalResponse();
         externalResponse.setExternalResponseBody(externalRequest.getExternalRequestBody() + SERVICE_CALL);
         externalResponse.setExternalResponseCookie(externalRequest.getExternalRequestCookie() + SERVICE_CALL);
